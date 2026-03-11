@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// Categoria de produtos (Hambúrguer, Bebida, etc.)
+model Categoria {
+  id       String    @id @default(uuid())
+  nome     String    @unique // Ex: 'hamburguer-artesanal'
+  label    String    // Ex: 'Hambúrguer Artesanal'
+  icone    String    // Emoji ou nome do ícone
+  produtos Produto[]
+}
+
+// Produto do cardápio
+model Produto {
+  id          String    @id @default(uuid())
+  nome        String
+  descricao   String
+  preco       Float
+  imagem      String
+  disponivel  Boolean   @default(true)
+  badge       String?   // Ex: 'Mais Vendido', 'Novo'
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+  categoriaId String
+  criadoEm    DateTime  @default(now())
+}
+
+// Pedido do cliente
+model Pedido {
+  id              String      @id @default(uuid())
+  nomeCliente     String
+  telefone        String
+  endereco        String
+  bairro          String
+  itens           String      // JSON string dos itens do pedido
+  total           Float
+  cupomCodigo     String?
+  desconto        Float       @default(0)
+  totalFinal      Float?      // Total após desconto
+  formaPagamento  String      // 'pix', 'dinheiro', 'cartao'
+  trocoParaValor  String?     // Valor para troco (quando pagamento em dinheiro)
+  observacoes     String?
+  status          String      @default("pendente")
+  criadoEm        DateTime    @default(now())
+}
+
+// Cupom de desconto
+model Cupom {
+  id             String    @id @default(uuid())
+  codigo         String    @unique // Ex: 'GANGAO10'
+  tipo           String    // 'porcentagem' ou 'valor'
+  valor          Float     // 10 (10%) ou 5 (R$ 5,00)
+  pedidoMinimo   Float     @default(0)
+  ativo          Boolean   @default(true)
+  validade       DateTime?
+  criadoEm       DateTime  @default(now())
+}
+
+// Promoção ativa (Banners no frontend)
+model Promocao {
+  id          String @id @default(uuid())
+  titulo      String
+  descricao   String
+  tag         String
+  icone       String
+  cor         String
+  corBorda    String
+}
