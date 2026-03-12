@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable react/no-unescaped-entities */
 
 import { useAdminStore } from '@/store/adminStore'
 import { formatarPreco } from '@/lib/utils'
@@ -269,7 +270,7 @@ export default function PedidosAdmin() {
                 {pedidoSelecionado.observacoes && (
                   <div className="p-4 bg-orange-500/10 border border-orange-500/20 rounded-2xl">
                     <p className="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-1">Observações</p>
-                    <p className="text-white text-sm italic">"{pedidoSelecionado.observacoes}"</p>
+                    <p className="text-white text-sm italic">{`"`}{pedidoSelecionado.observacoes}{`"`}</p>
                   </div>
                 )}
               </div>

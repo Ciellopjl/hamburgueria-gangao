@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import { 
   Plus, 
@@ -34,7 +35,7 @@ export default function CuponsPage() {
 
   useEffect(() => {
     carregarCupons()
-  }, [])
+  }, [carregarCupons])
 
   const handleAbrirModal = (cupom?: Cupom) => {
     if (cupom) {

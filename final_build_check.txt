@@ -1,0 +1,107 @@
+﻿
+> hamburgueria-gangao@1.0.0 build
+> next build
+
+  Ôû▓ Next.js 14.2.34
+  - Environments: .env
+
+   Creating an optimized production build ...
+ Ô£ô Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/20) ...
+   Generating static pages (5/20) 
+   Generating static pages (10/20) 
+   Generating static pages (15/20) 
+node.exe : (node:6588) 
+Warning: SECURITY 
+WARNING: The SSL modes 
+'prefer', 'require', 
+and 'verify-ca' are 
+treated as aliases for 
+'verify-full'.
+No linha:1 caractere:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: ((node:6588) W   
+ ar... 'verify-full    
+'.:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+In the next major 
+version 
+(pg-connection-string 
+v3.0.0 and pg v9.0.0), 
+these modes will adopt 
+standard libpq 
+semantics, which have 
+weaker security 
+guarantees.
+
+To prepare for this 
+change:
+- If you want the 
+current behavior, 
+explicitly use 
+'sslmode=verify-full'
+- If you want libpq 
+compatibility now, use 
+'uselibpqcompat=true&ss
+lmode=require'
+
+See https://www.postgre
+sql.org/docs/current/li
+bpq-ssl.html for libpq 
+SSL mode definitions.
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+ Ô£ô Generating static pages (20/20)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+Ôöî Ôùï /                                    3.17 kB         146 kB
+Ôö£ Ôùï /_not-found                          873 B          88.1 kB
+Ôö£ Ôùï /admin                               5.46 kB         138 kB
+Ôö£ Ôùï /admin/categorias                    1.91 kB         128 kB
+Ôö£ Ôùï /admin/configuracoes                 2.52 kB         126 kB
+Ôö£ Ôùï /admin/cupons                        4.78 kB         131 kB
+Ôö£ Ôùï /admin/pedidos                       4.87 kB         131 kB
+Ôö£ Ôùï /admin/produtos                      4.95 kB        94.7 kB
+Ôö£ ãÆ /api/admin/login                     0 B                0 B
+Ôö£ ãÆ /api/admin/remove-bg                 0 B                0 B
+Ôö£ ãÆ /api/categorias                      0 B                0 B
+Ôö£ ãÆ /api/categorias/[id]                 0 B                0 B
+Ôö£ ãÆ /api/cupons                          0 B                0 B
+Ôö£ ãÆ /api/cupons/[id]                     0 B                0 B
+Ôö£ ãÆ /api/cupons/validar                  0 B                0 B
+Ôö£ ãÆ /api/pedidos                         0 B                0 B
+Ôö£ ãÆ /api/pedidos/[id]                    0 B                0 B
+Ôö£ ãÆ /api/produtos                        0 B                0 B
+Ôö£ ãÆ /api/produtos/[id]                   0 B                0 B
+Ôö£ Ôùï /api/promocoes                       0 B                0 B
+Ôö£ Ôùï /cardapio                            333 B           144 kB
+Ôöö Ôùï /checkout                            4.36 kB         143 kB
++ First Load JS shared by all            87.3 kB
+  Ôö£ chunks/117-600cb873ccd892dd.js       31.7 kB
+  Ôö£ chunks/fd9d1056-1225178e105cf676.js  53.6 kB
+  Ôöö other shared chunks (total)          1.89 kB
+
+
+Ôùï  (Static)   prerendered as static content
+ãÆ  (Dynamic)  server-rendered on demand
+
