@@ -1,8 +1,14 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { getServerSession } from "next-auth/next"
 
 // GET /api/pedidos - Listar pedidos (admin)
 export async function GET() {
+  const session = await getServerSession()
+  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
+    return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
+  }
+
   try {
     const pedidos = await prisma.pedido.findMany({
       orderBy: { criadoEm: 'desc' },
@@ -45,6 +51,11 @@ export async function POST(request: Request) {
 }
 // DELETE /api/pedidos - Limpar todos os pedidos
 export async function DELETE() {
+  const session = await getServerSession()
+  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
+    return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
+  }
+
   try {
     await prisma.pedido.deleteMany()
     return NextResponse.json({ mensagem: 'Pedidos limpos com sucesso' })

@@ -1,11 +1,17 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { getServerSession } from "next-auth/next"
 
 // PUT /api/produtos/[id] - Editar produto
 export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession()
+  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
+    return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
+  }
+
   try {
     const dados = await request.json()
     const produto = await prisma.produto.update({
@@ -35,6 +41,11 @@ export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession()
+  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
+    return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
+  }
+
   try {
     await prisma.produto.delete({ where: { id: params.id } })
     return NextResponse.json({ mensagem: 'Produto excluído com sucesso' })

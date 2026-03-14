@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import { useAdminStore } from '@/store/adminStore'
 import AdminSidebar from '@/components/admin/AdminSidebar'
 import AdminLogin from '@/components/admin/AdminLogin'
@@ -12,30 +13,22 @@ export default function AdminLayout({
   children: React.ReactNode
 }) {
   const { carregarDados } = useAdminStore()
+  const { data: session, status } = useSession()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
 
   useEffect(() => {
-    // Verificar se existe o cookie de sessão
-    const hasSession = document.cookie.includes('admin_session=authenticated')
-    
-    if (isAuthenticated === null) {
-      setIsAuthenticated(hasSession)
-    }
-    
-    if (isAuthenticated || hasSession) {
+    if (session) {
       carregarDados()
       
-      // Polling para novos pedidos a cada 30 segundos
       const interval = setInterval(() => {
         carregarDados()
       }, 30000)
       
       return () => clearInterval(interval)
     }
-  }, [carregarDados, isAuthenticated])
+  }, [carregarDados, session])
 
-  if (isAuthenticated === null) {
+  if (status === 'loading') {
     return (
       <div className="min-h-screen bg-marca-preto flex items-center justify-center">
         <div className="w-10 h-10 border-4 border-red-600/20 border-t-red-600 rounded-full animate-spin" />
@@ -43,8 +36,8 @@ export default function AdminLayout({
     )
   }
 
-  if (!isAuthenticated) {
-    return <AdminLogin onLogin={() => setIsAuthenticated(true)} />
+  if (!session) {
+    return <AdminLogin />
   }
 
   return (

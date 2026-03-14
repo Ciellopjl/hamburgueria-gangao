@@ -1,6 +1,13 @@
 import { NextResponse } from 'next/server'
+import { getServerSession } from "next-auth/next"
 
 export async function POST(request: Request) {
+  const session = await getServerSession()
+  
+  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
+    return NextResponse.json({ erro: 'Acesso negado' }, { status: 401 })
+  }
+
   try {
     const { imageBase64 } = await request.json()
 
@@ -14,7 +21,7 @@ export async function POST(request: Request) {
     const response = await fetch('https://api.remove.bg/v1.0/removebg', {
       method: 'POST',
       headers: {
-        'X-Api-Key': process.env.REMOVE_BG_API_KEY || '4x2PBh4NNum7WgSChtAJoKgd',
+        'X-Api-Key': process.env.REMOVE_BG_API_KEY || '',
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },

@@ -1,8 +1,14 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { getServerSession } from "next-auth/next"
 
 // GET /api/cupons - Listar todos os cupons
 export async function GET() {
+  const session = await getServerSession()
+  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
+    return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
+  }
+
   try {
     const cupons = await prisma.cupom.findMany({
       orderBy: { criadoEm: 'desc' },
@@ -19,6 +25,11 @@ export async function GET() {
 
 // POST /api/cupons - Criar novo cupom
 export async function POST(req: Request) {
+  const session = await getServerSession()
+  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
+    return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
+  }
+
   try {
     const dados = await req.json()
     
