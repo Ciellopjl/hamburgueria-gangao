@@ -15,6 +15,7 @@ import {
   Ticket
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { signOut } from 'next-auth/react'
 
 interface SidebarProps {
   isOpen: boolean
@@ -116,13 +117,13 @@ export default function AdminSidebar({ isOpen, onClose }: SidebarProps) {
             <Store className="w-5 h-5 group-hover:text-red-500 transition-colors" />
             Voltar para Loja
           </Link>
-          <Link
-            href="/"
-            className="flex items-center gap-3 px-4 py-3 text-gray-500 hover:text-white hover:bg-white/5 rounded-xl transition-all text-sm font-medium"
+          <button
+            onClick={() => signOut({ callbackUrl: '/' })}
+            className="w-full flex items-center gap-3 px-4 py-3 text-gray-500 hover:text-white hover:bg-white/5 rounded-xl transition-all text-sm font-medium"
           >
             <LogOut className="w-5 h-5" />
             Sair do Admin
-          </Link>
+          </button>
         </div>
       </aside>
     </>
