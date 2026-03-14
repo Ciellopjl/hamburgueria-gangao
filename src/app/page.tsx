@@ -19,7 +19,11 @@ export default function HomePage() {
         const res = await fetch('/api/promocoes')
         if (res.ok) {
           const data = await res.json()
-          setPromocoes(data)
+          if (Array.isArray(data)) {
+            setPromocoes(data)
+          } else {
+            console.error('Promoções não retornou um array:', data)
+          }
         }
       } catch (erro) {
         console.error('Erro ao carregar promoções:', erro)

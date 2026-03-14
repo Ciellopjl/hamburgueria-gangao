@@ -18,10 +18,16 @@ export default function MenuSection() {
           fetch('/api/produtos'),
           fetch('/api/categorias'),
         ])
+        
         const produtosData = await resProdutos.json()
         const categoriasData = await resCategorias.json()
-        setProdutos(produtosData)
-        setCategorias(categoriasData)
+
+        setProdutos(Array.isArray(produtosData) ? produtosData : [])
+        setCategorias(Array.isArray(categoriasData) ? categoriasData : [])
+        
+        if (!Array.isArray(produtosData) || !Array.isArray(categoriasData)) {
+          console.error('API retornou formato inválido:', { produtosData, categoriasData })
+        }
       } catch (erro) {
         console.error('Erro ao carregar cardápio:', erro)
       } finally {

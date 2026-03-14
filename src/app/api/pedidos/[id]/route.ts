@@ -1,11 +1,17 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { getServerSession } from "next-auth/next"
 
 // PATCH /api/pedidos/[id] - Atualizar status do pedido
 export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession()
+  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
+    return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
+  }
+
   try {
     const { id } = params
     const { status } = await request.json()
