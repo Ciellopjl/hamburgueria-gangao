@@ -54,9 +54,14 @@ export const useAdminStore = create<AdminState>((set, get) => ({
 
       await get().carregarPedidos()
       await get().carregarCupons()
-      set({ produtos, categorias, carregando: false })
+      
+      set({ 
+        produtos: Array.isArray(produtos) ? produtos : [], 
+        categorias: Array.isArray(categorias) ? categorias : [], 
+        carregando: false 
+      })
     } catch (erro) {
-      set({ erro: 'Erro ao carregar dados', carregando: false })
+      set({ erro: 'Erro ao carregar dados', carregando: false, produtos: [], categorias: [] })
     }
   },
 
@@ -64,9 +69,10 @@ export const useAdminStore = create<AdminState>((set, get) => ({
     try {
       const res = await fetch('/api/pedidos')
       const pedidos = await res.json()
-      set({ pedidos })
+      set({ pedidos: Array.isArray(pedidos) ? pedidos : [] })
     } catch (erro) {
       console.error('Erro ao carregar pedidos:', erro)
+      set({ pedidos: [] })
     }
   },
 

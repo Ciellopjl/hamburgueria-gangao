@@ -18,16 +18,20 @@ import Link from 'next/link'
 export default function AdminDashboard() {
   const { pedidos, produtos, carregando } = useAdminStore()
 
-  // Stats calculations
-  const totalVendas = pedidos.reduce((acc, p) => acc + p.total, 0)
-  const pedidosHoje = pedidos.filter(p => {
+  // Stats calculations safely
+  const safePedidos = Array.isArray(pedidos) ? pedidos : []
+  const safeProdutos = Array.isArray(produtos) ? produtos : []
+
+  const totalVendas = safePedidos.reduce((acc, p) => acc + (p?.total || 0), 0)
+  const pedidosHoje = safePedidos.filter(p => {
+    if (!p?.criadoEm) return false
     const data = new Date(p.criadoEm)
     const hoje = new Date()
     return data.getDate() === hoje.getDate() && 
            data.getMonth() === hoje.getMonth() && 
            data.getFullYear() === hoje.getFullYear()
   })
-  const pedidosPendentes = pedidos.filter(p => p.status === 'pendente' || p.status === 'preparando')
+  const pedidosPendentes = safePedidos.filter(p => p?.status === 'pendente' || p?.status === 'preparando')
 
   const stats = [
     { 
@@ -56,7 +60,7 @@ export default function AdminDashboard() {
     },
     { 
       label: 'Produtos', 
-      valor: produtos.length, 
+      valor: safeProdutos.length, 
       sub: 'No cardápio',
       icon: CheckCircle2, 
       color: 'text-purple-500', 
@@ -131,7 +135,7 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5">
-                  {pedidos.slice(0, 5).map((pedido) => (
+                  {safePedidos.slice(0, 5).map((pedido) => (
                     <tr key={pedido.id} className="hover:bg-white/[0.02] transition-colors">
                       <td className="px-6 py-4">
                         <div className="flex flex-col">
@@ -149,16 +153,16 @@ export default function AdminDashboard() {
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="text-sm font-display font-bold text-white">{formatarPreco(pedido.total)}</span>
+                        <span className="text-sm font-display font-bold text-white">{formatarPreco(pedido.total || 0)}</span>
                       </td>
                       <td className="px-6 py-4 text-right">
                         <span className="text-xs text-gray-500 font-mono">
-                          {new Date(pedido.criadoEm).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                          {pedido.criadoEm ? new Date(pedido.criadoEm).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '--:--'}
                         </span>
                       </td>
                     </tr>
                   ))}
-                  {pedidos.length === 0 && (
+                  {safePedidos.length === 0 && (
                     <tr>
                       <td colSpan={4} className="px-6 py-12 text-center">
                         <ShoppingBag className="w-12 h-12 text-gray-800 mx-auto mb-4 opacity-50" />

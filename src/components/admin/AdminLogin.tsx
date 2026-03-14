@@ -50,7 +50,7 @@ export default function AdminLogin() {
         </div>
 
         <p className="mt-12 text-center text-xs text-gray-500">
-          &copy; {new Date().getFullYear()} Mega Lanche do Gangão.
+          &copy; Mega Lanche do Gangão.
         </p>
       </motion.div>
     </div>
