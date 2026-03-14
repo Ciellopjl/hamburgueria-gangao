@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/lib/auth"
 
 // GET /api/produtos - Listar todos os produtos
 export async function GET() {
@@ -21,7 +22,7 @@ export async function GET() {
 
 // POST /api/produtos - Criar novo produto (admin)
 export async function POST(request: Request) {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
     return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
   }

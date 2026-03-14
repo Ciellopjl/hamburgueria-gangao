@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/lib/auth"
 
 // GET /api/cupons - Listar todos os cupons
 export async function GET() {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
     return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
   }
@@ -25,7 +26,7 @@ export async function GET() {
 
 // POST /api/cupons - Criar novo cupom
 export async function POST(req: Request) {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
     return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
   }

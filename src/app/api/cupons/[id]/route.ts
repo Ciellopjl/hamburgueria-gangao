@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/lib/auth"
 
 // PUT /api/cupons/[id] - Editar cupom
 export async function PUT(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
     return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
   }
@@ -43,7 +44,7 @@ export async function DELETE(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
     return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
   }

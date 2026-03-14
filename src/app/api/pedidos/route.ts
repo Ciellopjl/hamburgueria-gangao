@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/lib/auth"
 
 // GET /api/pedidos - Listar pedidos (admin)
 export async function GET() {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
     return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
   }
@@ -51,7 +52,7 @@ export async function POST(request: Request) {
 }
 // DELETE /api/pedidos - Limpar todos os pedidos
 export async function DELETE() {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
     return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
   }
