@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user }) {
       if (!user.email) return false
       
-      const bossEmail = process.env.ADMIN_EMAIL || "ciellolisboa023@gmail.com"
+      const bossEmail = process.env.ADMIN_EMAIL || "ciellopjl023@gmail.com"
       
       // O boss sempre tem acesso
       if (user.email === bossEmail) return true
@@ -39,7 +39,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         // @ts-ignore
-        session.user.role = session.user.email === (process.env.ADMIN_EMAIL || "ciellolisboa023@gmail.com") ? "BOSS" : "ADMIN"
+        session.user.role = session.user.email === (process.env.ADMIN_EMAIL || "ciellopjl023@gmail.com") ? "BOSS" : "ADMIN"
       }
       return session
     },

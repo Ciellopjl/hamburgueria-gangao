@@ -14,7 +14,7 @@ export default function LiberacaoPage() {
   const [actionLoading, setActionLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const BOSS_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "ciellolisboa023@gmail.com"
+  const BOSS_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "ciellopjl023@gmail.com"
   const isBoss = session?.user?.email === BOSS_EMAIL
 
   useEffect(() => {
