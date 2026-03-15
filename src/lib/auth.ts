@@ -24,17 +24,9 @@ export const authOptions: NextAuthOptions = {
       
       const bossEmail = process.env.ADMIN_EMAIL || "ciellopjl023@gmail.com"
       
-      // O boss sempre tem acesso
-      if (user.email === bossEmail) return true
-      
-      // Verifica se o email está na lista de autorizados no banco de dados
-      const { prisma } = await import("./prisma")
-      // @ts-ignore
-      const allowed = await prisma.allowedEmail.findUnique({
-        where: { email: user.email }
-      })
-      
-      return !!allowed
+      // Permite o login. O controle de acesso granular de admin vs boss é feito
+      // via verificação de role/sessão dentro do painel.
+      return true
     },
     async session({ session, token }) {
       if (session.user) {

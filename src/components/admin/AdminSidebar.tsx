@@ -29,16 +29,12 @@ const menuItems = [
   { href: '/admin/produtos', label: 'Produtos', icon: Package },
   { href: '/admin/categorias', label: 'Categorias', icon: ListTree },
   { href: '/admin/cupons', label: 'Cupons', icon: Ticket },
-  { href: '/admin/liberacao', label: 'Liberação', icon: UserCheck, bossOnly: true },
   { href: '/admin/configuracoes', label: 'Configurações', icon: Settings },
 ]
 
 export default function AdminSidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname()
   const { data: session } = useSession()
-  const isBoss = (session?.user as any)?.role === 'BOSS'
-
-  const filteredMenuItems = menuItems.filter(item => !item.bossOnly || isBoss)
 
   return (
     <>
@@ -82,7 +78,7 @@ export default function AdminSidebar({ isOpen, onClose }: SidebarProps) {
         </div>
 
         <nav className="flex-1 px-4 space-y-1 overflow-y-auto">
-          {filteredMenuItems.map((item) => {
+          {menuItems.map((item) => {
             const active = pathname === item.href
             return (
               <Link
