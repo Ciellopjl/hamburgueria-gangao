@@ -103,11 +103,16 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         body: JSON.stringify(produto),
       })
 
-      if (!res.ok) throw new Error('Erro ao adicionar produto')
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.detalhes || data.erro || 'Erro ao adicionar produto')
+      }
 
       await get().carregarDados()
-    } catch (erro) {
-      set({ erro: 'Erro ao adicionar produto', carregando: false })
+    } catch (erro: any) {
+      console.error('Erro ao adicionar produto:', erro)
+      alert(erro.message || 'Erro ao adicionar produto')
+      set({ erro: erro.message, carregando: false })
     }
   },
 
@@ -120,7 +125,10 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         body: JSON.stringify(dados),
       })
 
-      if (!res.ok) throw new Error('Erro ao editar produto')
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.detalhes || data.erro || 'Erro ao editar produto')
+      }
 
       await get().carregarDados()
     } catch (erro) {
@@ -151,10 +159,15 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dados),
       })
-      if (!res.ok) throw new Error('Erro ao adicionar categoria')
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.detalhes || data.erro || 'Erro ao adicionar categoria')
+      }
       await get().carregarDados()
-    } catch (erro) {
-      set({ erro: 'Erro ao adicionar categoria', carregando: false })
+    } catch (erro: any) {
+      console.error('Erro ao adicionar categoria:', erro)
+      alert(erro.message || 'Erro ao adicionar categoria')
+      set({ erro: erro.message, carregando: false })
     }
   },
 
@@ -224,7 +237,10 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dados),
       })
-      if (!res.ok) throw new Error('Erro ao adicionar cupom')
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.detalhes || data.erro || 'Erro ao adicionar cupom')
+      }
       await get().carregarCupons()
       set({ carregando: false })
     } catch (erro) {

@@ -8,7 +8,7 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   const session = await getServerSession()
-  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
+  if (!session || session.user?.email !== process.env.ADMIN_EMAIL) {
     return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
   }
 

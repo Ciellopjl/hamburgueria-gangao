@@ -4,7 +4,7 @@ export default withAuth({
   callbacks: {
     authorized: ({ token }) => {
       // Apenas o e-mail autorizado pode passar
-      return token?.email === "ciellolisboa023@gmail.com"
+      return token?.email === process.env.ADMIN_EMAIL
     },
   },
   pages: {
@@ -17,5 +17,8 @@ export const config = {
     "/admin",
     "/admin/:path*",
     "/api/admin/:path*",
+    "/api/produtos",
+    "/api/categorias",
+    "/api/cupons",
   ],
 }

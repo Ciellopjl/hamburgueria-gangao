@@ -22,29 +22,44 @@ export async function GET() {
 
 // POST /api/produtos - Criar novo produto (admin)
 export async function POST(request: Request) {
-  const session = await getServerSession(authOptions)
-  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
-    return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
-  }
-
   try {
+    const session = await getServerSession(authOptions)
+    
+    console.log('Tentativa de criação de produto por:', session?.user?.email)
+
+    if (!session || session.user?.email !== process.env.ADMIN_EMAIL) {
+      console.warn('Bloqueio de segurança: Usuário não autorizado ou sessão nula.')
+      return NextResponse.json({ 
+        erro: 'Não autorizado', 
+        detalhes: session ? `Sessão ativa como: ${session.user?.email}` : 'O servidor não encontrou nenhuma sessão ativa (cookies ausentes ou inválidos).'
+      }, { status: 401 })
+    }
+
     const dados = await request.json()
+    
+    // Validação básica de servidor
+    if (!dados.nome || !dados.categoriaId || isNaN(parseFloat(dados.preco))) {
+      return NextResponse.json({ erro: 'Dados incompletos ou inválidos' }, { status: 400 })
+    }
+
     const produto = await prisma.produto.create({
       data: {
         nome: dados.nome,
-        descricao: dados.descricao,
-        preco: dados.preco,
-        imagem: dados.imagem,
+        descricao: dados.descricao || '',
+        preco: parseFloat(dados.preco),
+        imagem: dados.imagem || '',
         categoriaId: dados.categoriaId,
         badge: dados.badge || null,
         disponivel: dados.disponivel ?? true,
       },
     })
+
+    console.log('Produto criado com sucesso:', produto.id)
     return NextResponse.json(produto, { status: 201 })
-  } catch (erro) {
-    console.error('Erro ao criar produto:', erro)
+  } catch (erro: any) {
+    console.error('ERRO FATAL NA CRIAÇÃO DE PRODUTO:', erro)
     return NextResponse.json(
-      { erro: 'Erro ao criar produto' },
+      { erro: 'Erro interno ao criar produto: ' + (erro.message || 'Erro de banco de dados') },
       { status: 500 }
     )
   }

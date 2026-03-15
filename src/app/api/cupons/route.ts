@@ -6,7 +6,7 @@ import { authOptions } from "@/lib/auth"
 // GET /api/cupons - Listar todos os cupons
 export async function GET() {
   const session = await getServerSession(authOptions)
-  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
+  if (!session || session.user?.email !== process.env.ADMIN_EMAIL) {
     return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
   }
 
@@ -27,7 +27,7 @@ export async function GET() {
 // POST /api/cupons - Criar novo cupom
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions)
-  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
+  if (!session || session.user?.email !== process.env.ADMIN_EMAIL) {
     return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
   }
 

@@ -70,3 +70,10 @@ model Promocao {
   cor         String
   corBorda    String
 }
+
+// Emails autorizados a acessar o painel admin
+model AllowedEmail {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  criadoEm  DateTime @default(now())
+}

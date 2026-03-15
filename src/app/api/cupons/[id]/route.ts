@@ -9,7 +9,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   const session = await getServerSession(authOptions)
-  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
+  if (!session || session.user?.email !== process.env.ADMIN_EMAIL) {
     return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
   }
 
@@ -45,7 +45,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   const session = await getServerSession(authOptions)
-  if (!session || session.user?.email !== "ciellolisboa023@gmail.com") {
+  if (!session || session.user?.email !== process.env.ADMIN_EMAIL) {
     return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
   }
 

@@ -1,10 +1,13 @@
 import { PrismaClient } from '@prisma/client'
+import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 
 // Singleton do PrismaClient para evitar múltiplas conexões em dev
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
+const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+// @ts-ignore
+const adapter = new PrismaPg(pool)
 
 export const prisma = globalForPrisma.prisma || new PrismaClient({ adapter })
 

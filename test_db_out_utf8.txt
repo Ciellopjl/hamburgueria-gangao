@@ -1,0 +1,105 @@
+﻿node.exe : C:\Users\cie
+llopjl\Downloads\projet
+os\hamburgueria-gangao-
+main\node_modules\@pris
+ma\client\src\runtime\g
+etPrismaClient.ts:320
+No linha:1 caractere:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (C:\Users\ciel   
+ lo...maClient.ts:3    
+20:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+        throw new Prism
+aClientInitializationEr
+ror(
+              ^
+
+PrismaClientInitializat
+ionError: 
+`PrismaClient` needs 
+to be constructed with 
+a non-empty, valid 
+`PrismaClientOptions`:
+
+```
+new PrismaClient({
+  ...
+})
+```
+
+or
+
+```
+constructor() {
+  super({ ... });
+}
+```
+          
+    at new t (C:\Users\
+ciellopjl\Downloads\pro
+jetos\hamburgueria-gang
+ao-main\node_modules\@p
+risma\client\src\runtim
+e\getPrismaClient.ts:32
+0:15)
+    at <anonymous> (C:\
+Users\ciellopjl\Downloa
+ds\projetos\hamburgueri
+a-gangao-main\test_db.t
+s:3:16)
+    at 
+Object.<anonymous> (C:\
+Users\ciellopjl\Downloa
+ds\projetos\hamburgueri
+a-gangao-main\test_db.t
+s:17:4)
+    at Module._compile 
+(node:internal/modules/
+cjs/loader:1812:14)
+    at 
+Object.transformer (C:\
+Users\ciellopjl\Downloa
+ds\projetos\hamburgueri
+a-gangao-main\node_modu
+les\tsx\dist\register-D
+46fvsV_.cjs:3:1104)
+    at Module.load (nod
+e:internal/modules/cjs/
+loader:1533:32)
+    at Module._load (no
+de:internal/modules/cjs
+/loader:1335:12)
+    at wrapModuleLoad (
+node:internal/modules/c
+js/loader:255:19)
+    at loadCJSModuleWit
+hModuleLoad (node:inter
+nal/modules/esm/transla
+tors:328:3)
+    at 
+ModuleWrap.<anonymous> 
+(node:internal/modules/
+esm/translators:233:7) 
+{
+  clientVersion: 
+'7.5.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+
+Node.js v24.14.0
